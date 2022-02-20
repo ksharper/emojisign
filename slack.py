@@ -37,19 +37,19 @@ def handle(client: RTMClient, event: dict):
     print(f'Custom: {file_name}')
     
     if not file_name:
-#        try:
+        try:
             if emoji_search.lastindex == 1:
                 file_name = [f'/home/pi/emoji-data/img-apple-64/{emoji_data_python.emoji_short_names[short_name].image}']
             else:
                 file_name = [f'/home/pi/emoji-data/img-apple-64/{emoji_data_python.emoji_short_names[short_name].skin_variations[emoji_data_python.emoji_short_names[skin_tone].unified].image}']
 
             print(f'Apple: {file_name}')
-#        except:
- #           client.web_client.chat_postMessage(
-  #              channel=channel_id,
-   #             text=f"emojisign does not know {event['text']}",
-    #            thread_ts=thread_ts
-     #       )
+        except:
+            client.web_client.chat_postMessage(
+                channel=channel_id,
+                text=f"emojisign does not know {event['text']}",
+                thread_ts=thread_ts
+            )
 
     if file_name:
         os.system('pkill led-image-view')
