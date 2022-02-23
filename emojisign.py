@@ -33,15 +33,15 @@ def handle(client: RTMClient, event: dict):
     print(f'Name: {short_name}')
     print(f'Skin tone: {skin_tone}')
 
-    file_name = glob.glob(f'/home/pi/custom/{short_name}.*')
+    file_name = glob.glob(f'/home/pi/custom/{short_name}.*')[0]
     print(f'Custom: {file_name}')
     
     if not file_name:
         try:
             if emoji_search.lastindex == 1:
-                file_name = [f'/home/pi/emoji-data/img-apple-64/{emoji_data_python.emoji_short_names[short_name].image}']
+                file_name = f'/home/pi/emoji-data/img-apple-64/{emoji_data_python.emoji_short_names[short_name].image}'
             else:
-                file_name = [f'/home/pi/emoji-data/img-apple-64/{emoji_data_python.emoji_short_names[short_name].skin_variations[emoji_data_python.emoji_short_names[skin_tone].unified].image}']
+                file_name = f'/home/pi/emoji-data/img-apple-64/{emoji_data_python.emoji_short_names[short_name].skin_variations[emoji_data_python.emoji_short_names[skin_tone].unified].image}'
 
             print(f'Apple: {file_name}')
         except:
@@ -53,6 +53,6 @@ def handle(client: RTMClient, event: dict):
 
     if file_name:
         os.system('pkill led-image-view')
-        os.system(f'/home/pi/rpi-rgb-led-matrix/utils/led-image-viewer --led-rows=32 --led-cols=64 --led-chain=2 --led-pixel-mapper=V-mapper --led-daemon -C {file_name[0]}')
+        os.system(f'/home/pi/rpi-rgb-led-matrix/utils/led-image-viewer --led-rows=32 --led-cols=64 --led-chain=2 --led-pixel-mapper=V-mapper --led-daemon -C {file_name}')
 
 rtm.start()

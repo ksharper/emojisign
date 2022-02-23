@@ -1,10 +1,10 @@
- [Unit]
- Description=EmojiSign
- After=multi-user.target
+[Unit]
+Description=EmojiSign
+After=multi-user.target
 
- [Service]
- Type=idle
- ExecStart=/usr/bin/python /home/pi/slack.py
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/pi/emojisign.py
 
- [Install]
- WantedBy=multi-user.target
+[Install]
+WantedBy=multi-user.target
