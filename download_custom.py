@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-#os.system('curl -H "Authorization: Bearer ${SLACK_USER_TOKEN}" --output /home/pi/emoji.json  https://slack.com/api/emoji.list')
+os.system('curl -H "Authorization: Bearer ${SLACK_USER_TOKEN}" --output /home/pi/emoji.json  https://slack.com/api/emoji.list')
 
 output_directory = '/home/pi/custom'
 emoji_file = open('/home/pi/emoji.json')
