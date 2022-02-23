@@ -33,18 +33,22 @@ def handle(client: RTMClient, event: dict):
     print(f'Name: {short_name}')
     print(f'Skin tone: {skin_tone}')
 
-    file_name = glob.glob(f'/home/pi/custom/{short_name}.*')[0]
-    print(f'Custom: {file_name}')
-    
-    if not file_name:
+    custom_search = glob.glob(f'/home/pi/custom/{short_name}.*')
+    if custom_search:
+        file_name = custom_search[0]
+        print(f'Custom: {file_name}')
+    else:
         try:
+            base_emoji = emoji_data_python.emoji_short_names[short_name]
+
             if emoji_search.lastindex == 1:
-                file_name = f'/home/pi/emoji-data/img-apple-64/{emoji_data_python.emoji_short_names[short_name].image}'
+                file_name = f'/home/pi/emoji-data/img-apple-64/{base_emoji.image}'
             else:
-                file_name = f'/home/pi/emoji-data/img-apple-64/{emoji_data_python.emoji_short_names[short_name].skin_variations[emoji_data_python.emoji_short_names[skin_tone].unified].image}'
+                file_name = f'/home/pi/emoji-data/img-apple-64/{base_emoji.skin_variations[emoji_data_python.emoji_short_names[skin_tone].unified].image}'
 
             print(f'Apple: {file_name}')
         except:
+            print('emoji not known')
             client.web_client.chat_postMessage(
                 channel=channel_id,
                 text=f"emojisign does not know {event['text']}",
